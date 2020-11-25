@@ -6,7 +6,7 @@
     <div class="form-group">
       <label for="name">Name</label>
       <input id="name" name="name" class="form-control" placeholder="Name" [(ngModel)]="userSettings.name" required
-        #nameField="ngModel" [class.field-error]="form.submitted && nameField.invalid" />
+        #nameField="ngModel" [class.field-error]="form.submitted && nameField.invalid" (blur)="onBlur(nameField)"/>
     </div>
     <div [hidden]="!form.submitted || nameField.valid" class="alert alert-danger">
       Enter a name
