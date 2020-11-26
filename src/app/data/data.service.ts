@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { UserSettings } from './user-setting';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -7,5 +8,7 @@ import { UserSettings } from './user-setting';
 export class DataService {
   constructor() {}
 
-  postUserSettingsForm(userSettings: UserSettings) {}
+  postUserSettingsForm(userSettings: UserSettings): Observable<UserSettings> {
+    return of(userSettings);
+  }
 }
