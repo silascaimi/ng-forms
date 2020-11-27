@@ -11,7 +11,7 @@ import { DataService } from '../data/data.service';
 })
 export class UserSettingsFormComponent implements OnInit {
     originalUserSettings: UserSettings = {
-    name: 'Milton',
+    name: null,
     emailOffers: true,
     interfaceStyle: 'dark',
     subscriptionType: 'Annual',
