@@ -10,7 +10,7 @@ import { DataService } from '../data/data.service';
   styleUrls: ['./user-settings-form.component.css'],
 })
 export class UserSettingsFormComponent implements OnInit {
-    originalUserSettings: UserSettings = {
+  originalUserSettings: UserSettings = {
     name: null,
     emailOffers: true,
     interfaceStyle: 'dark',
@@ -18,20 +18,35 @@ export class UserSettingsFormComponent implements OnInit {
     notes: 'here are some notes...',
   };
 
+  postError = false;
+  postErrorMessage = '';
+
   userSettings: UserSettings = { ...this.originalUserSettings };
   constructor(private dataService: DataService) {}
 
   ngOnInit(): void {}
 
-  onBlur(field: NgModel){
+  onBlur(field: NgModel) {
     console.log('on Blur: ', field.valid);
+  }
+
+  onHttpError(errorResponse: any) {
+    console.log('error', errorResponse);
+    this.postError = true;
+    this.postErrorMessage = errorResponse.error.errorMessage;
   }
 
   onSubmit(form: NgForm) {
     console.log('in onSubmit: ', form.valid);
-    this.dataService.postUserSettingsForm(this.userSettings).subscribe(
-      (result) => console.log('success: ', result),
-      (error) => console.log('error: ',  error)
-    );
+
+    if (form.valid) {
+      this.dataService.postUserSettingsForm(this.userSettings).subscribe(
+        (result) => console.log('success: ', result),
+        (error) => this.onHttpError(error)
+      );
+    } else {
+      this.postError = true;
+      this.postErrorMessage = 'Please fix the abose errors';
+    }
   }
 }
