@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserSettings } from '../data/user-setting';
 import { NgForm, NgModel } from '@angular/forms';
+import { Observable, ObservableLike } from 'rxjs';
 
 import { DataService } from '../data/data.service';
 
@@ -12,19 +13,22 @@ import { DataService } from '../data/data.service';
 export class UserSettingsFormComponent implements OnInit {
   originalUserSettings: UserSettings = {
     name: null,
-    emailOffers: true,
-    interfaceStyle: 'dark',
-    subscriptionType: 'Annual',
+    emailOffers: false,
+    interfaceStyle: null,
+    subscriptionType: null,
     notes: 'here are some notes...',
   };
 
   postError = false;
   postErrorMessage = '';
+  subscriptionTypes: Observable<string[]>;
 
   userSettings: UserSettings = { ...this.originalUserSettings };
   constructor(private dataService: DataService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.subscriptionTypes = this.dataService.getSubscriptionTypes();
+  }
 
   onBlur(field: NgModel) {
     console.log('on Blur: ', field.valid);

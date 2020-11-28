@@ -6,7 +6,7 @@
     <div class="form-group">
       <label for="name">Name</label>
       <input id="name" name="name" class="form-control" placeholder="Name" [(ngModel)]="userSettings.name" required
-        #nameField="ngModel" [class.field-error]="form.submitted && nameField.invalid" (blur)="onBlur(nameField)"/>
+        #nameField="ngModel" [class.field-error]="form.submitted && nameField.invalid" (blur)="onBlur(nameField)" />
     </div>
     <div [hidden]="!form.submitted || nameField.valid" class="alert alert-danger">
       Enter a name
@@ -49,9 +49,7 @@
       <label for="subscriptionType">Subscription Type</label>
       <select class="form-control" id="subscriptionType" name="subscriptionType"
         [(ngModel)]="userSettings.subscriptionType">
-        <option>Monthly</option>
-        <option>Annual</option>
-        <option>Lifetime</option>
+        <option *ngFor="let types of subscriptionTypes | async">{{types}}</option>
       </select>
     </div>
 
